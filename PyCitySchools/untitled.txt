@@ -1,0 +1,42 @@
+# Calculate the total number of schools
+totalSchools = school_data_complete["school_name"].nunique()
+# Calculate the total number of students
+totalStudents = school_data_complete["Student ID"].nunique()
+# Calculate the total budget
+totalBudget = school_data["budget"].sum()
+# Calculate the average math score
+averageMathScore = school_data_complete["math_score"].mean()
+# Calculate the average reading score
+averageReadingScore = school_data_complete["reading_score"].mean()
+# Calculate the percentage of students with a passing math score (70 or greater)
+passingMath = len(school_data_complete[school_data_complete["math_score"] >= 70])
+percentagePassingMath = passingMath / totalStudents * 100
+# Calculate the percentage of students with a passing reading score (70 or greater)
+passingReading = len(school_data_complete[school_data_complete["reading_score"] >= 70])
+percentagePassingReading = passingReading / totalStudents * 100
+# Calculate the overall passing rate (overall average score), i.e. (avg. math score + avg. reading score)/2
+percentageOverallPassingRate = (averageMathScore + averageReadingScore) / 2
+
+# Create a dataframe to hold the above results
+district_summary_df = pd.DataFrame({
+    "Total Schools": [totalSchools],
+    "Total Students": [totalStudents],
+    "Total Budget": [totalBudget],
+    "Average Math Score": [averageMathScore],  
+    "Average Reading Score": [averageReadingScore],
+    "% Passing Math": [percentagePassingMath],
+    "% Passing Reading": [percentagePassingReading],
+    "% Overall Passing Rate": [percentageOverallPassingRate]
+})
+
+# Optional: give the displayed data cleaner formatting
+district_summary_df["Total Budget"] = district_summary_df["Total Budget"].map("${:,.2f}".format)
+
+district_summary_df[["Total Schools",
+      "Total Students",
+      "Total Budget",
+      "Average Math Score",
+      "Average Reading Score",
+      "% Passing Math",
+      "% Passing Reading",
+      "% Overall Passing Rate"]]
